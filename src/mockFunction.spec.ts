@@ -1,9 +1,19 @@
 import { obj } from "./mockFunction";
 
+/**스파이 함수를 심은 minus가 계속 실행이 되는걸로 집계가 되서 toHaveBeenCalledTimes가 제대로 동작을 하지않아서
+ * 초기화 해주는 작업
+ */
 beforeEach(() => {
   jest.clearAllMocks();
   jest.restoreAllMocks();
 });
+
+/**
+ * 테스트함수마다 테스트 마지막에 변수.mockClear() .mockReset() .mopckRestore(); 등을 넣어서 초기화해줄수있다.
+ * mockClear는 함수가 몇번실행되었는지 , 누구와 함께 실행되었는지 그런정보들만 초기화함
+ * mockReset은 함수를 비워버린다 ex) mockClear + mockImplementation(()=>{}) 라고 볼수있다.
+ * mockRestore는 함수 본래의 기능만 남기고 아예 전부 없애버린다. (강력한 초기화)
+ */
 
 test("obj.minus 함수가 1번 호출되었다(minus 함수에 spy 삽입)", () => {
   jest.spyOn(obj, "minus");
