@@ -89,3 +89,23 @@ test("리턴값이 다르게 나오기(mockReturnValueOnce) 한번만", () => {
   expect(result2).toBe(3);
   expect(result3).toBe(8);
 });
+
+//모든 테스트 실행전
+beforeAll(() => {
+  console.log("이 테스트 파일 준비사항");
+});
+
+//각 테스트 실행 전
+beforeEach(() => {
+  console.log("각 테스트 전에 실행할거");
+});
+
+//각 테스트 실행 후
+afterEach(() => {
+  console.log("각 테스트 후에 실행할거");
+});
+
+//모든 테스트 끝난후
+afterAll(() => {
+  console.log("모든 테스트 끝난후 실행할거");
+});
