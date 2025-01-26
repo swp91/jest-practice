@@ -53,41 +53,59 @@ test("mockImplementationOnce는 한번만 실행되는 가상함수 끝나면 �
   expect(result3).toBe(-1);
 });
 
-test("mockImplementationOnce실행후 그 이후는 쭉 설정한 mock 함수로", () => {
-  jest
-    .spyOn(obj, "minus")
-    .mockImplementationOnce((a, b) => a + b)
-    .mockImplementationOnce(() => 5)
-    .mockImplementation(() => 4);
-  const result1 = obj.minus(1, 2);
-  const result2 = obj.minus(1, 2);
-  const result3 = obj.minus(1, 2);
-  expect(obj.minus).toHaveBeenCalledTimes(3);
-  expect(result1).toBe(3);
-  expect(result2).toBe(5);
-  expect(result3).toBe(4);
-});
+/** beforeAll라던가 Each같은 이런것들을 모든 테스트에 적용하기 싫다
+ * 일부 테스트들만 적용하고싶다 라고하면
+ * descirbe로 적용하고싶은 애들만 묶어서 그 안에 넣으면된다.
+ * descirbe는 그룹화를 위한 메서드다.
+ */
 
-test("리턴값이 다르게 나오기(mockReturnValue)", () => {
-  jest.spyOn(obj, "minus").mockReturnValue(5);
-  const result1 = obj.minus(1, 2);
-  expect(obj.minus).toHaveBeenCalledTimes(1);
-  expect(result1).toBe(5);
-});
+describe("디스크라이브는 그룹화를 시킬수있다.", () => {
+  /** before나 after를 이렇게 describe 안에 넣으면
+   * describe 안에 있는 테스트들만 적용됨
+   */
+  beforeEach(() => {
+    console.log("디스크라이브 내부의 각 테스트 전에 실행할거 ");
+  });
+  afterEach(() => {
+    console.log("디스크라이브 내부의 각 테스트 후에 실행할거");
+  });
 
-test("리턴값이 다르게 나오기(mockReturnValueOnce) 한번만", () => {
-  jest
-    .spyOn(obj, "minus")
-    .mockReturnValueOnce(5)
-    .mockReturnValueOnce(3)
-    .mockReturnValue(8);
-  const result1 = obj.minus(1, 2);
-  const result2 = obj.minus(1, 2);
-  const result3 = obj.minus(1, 2);
-  expect(obj.minus).toHaveBeenCalledTimes(3);
-  expect(result1).toBe(5);
-  expect(result2).toBe(3);
-  expect(result3).toBe(8);
+  test("mockImplementationOnce실행후 그 이후는 쭉 설정한 mock 함수로", () => {
+    jest
+      .spyOn(obj, "minus")
+      .mockImplementationOnce((a, b) => a + b)
+      .mockImplementationOnce(() => 5)
+      .mockImplementation(() => 4);
+    const result1 = obj.minus(1, 2);
+    const result2 = obj.minus(1, 2);
+    const result3 = obj.minus(1, 2);
+    expect(obj.minus).toHaveBeenCalledTimes(3);
+    expect(result1).toBe(3);
+    expect(result2).toBe(5);
+    expect(result3).toBe(4);
+  });
+
+  test("리턴값이 다르게 나오기(mockReturnValue)", () => {
+    jest.spyOn(obj, "minus").mockReturnValue(5);
+    const result1 = obj.minus(1, 2);
+    expect(obj.minus).toHaveBeenCalledTimes(1);
+    expect(result1).toBe(5);
+  });
+
+  test("리턴값이 다르게 나오기(mockReturnValueOnce) 한번만", () => {
+    jest
+      .spyOn(obj, "minus")
+      .mockReturnValueOnce(5)
+      .mockReturnValueOnce(3)
+      .mockReturnValue(8);
+    const result1 = obj.minus(1, 2);
+    const result2 = obj.minus(1, 2);
+    const result3 = obj.minus(1, 2);
+    expect(obj.minus).toHaveBeenCalledTimes(3);
+    expect(result1).toBe(5);
+    expect(result2).toBe(3);
+    expect(result3).toBe(8);
+  });
 });
 
 //모든 테스트 실행전
