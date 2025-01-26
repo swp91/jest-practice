@@ -15,13 +15,21 @@ beforeEach(() => {
  * mockRestore는 함수 본래의 기능만 남기고 아예 전부 없애버린다. (강력한 초기화)
  */
 
-test("obj.minus 함수가 1번 호출되었다(minus 함수에 spy 삽입)", () => {
+/**skip은 건너뛰는 의미다 해당 테스트를 건너뛰므로 에러가 뜨지않는다.
+ * skip대신 앞에 x를 붙여도된다 xtest 이런식으로
+ */
+test.skip("obj.minus 함수가 1번 호출되었다(minus 함수에 spy 삽입)", () => {
   jest.spyOn(obj, "minus");
   const result = obj.minus(1, 2);
   console.log(obj.minus);
   expect(obj.minus).toHaveBeenCalledTimes(1);
   expect(result).toBe(-1);
 });
+
+// 테스트 나중에 만들껀  투두를 붙이면된다.
+test.todo("나중에 만들어야지~");
+
+it("잇과 test는 똑같다", () => {});
 
 test("obj.minus에 스파이를 심고 실행도 안되게", () => {
   jest.spyOn(obj, "minus").mockImplementation();
